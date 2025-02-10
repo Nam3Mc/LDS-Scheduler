@@ -1,0 +1,24 @@
+1) py -m venv myworld
+code to create an enviroment
+
+2) py -m pip install Django
+we need to install tools in our enviroment
+
+3) django-admin startproject myProjectName
+cose to create the app
+
+4) source petShop/Scripts/activate
+code to activate the enviroment from root folder
+
+5) py manage.py startapp members
+code to create an app
+
+6) py manage.py runserver
+code to start the app 
+
+7) py manage.py migrate
+when creating a new folder for entities we have to adde it to 
+settings in INSTALLED_APPS then run that code
+
+8) py manage.py makemigrations
+use this code when having changes in modules before code 7)
