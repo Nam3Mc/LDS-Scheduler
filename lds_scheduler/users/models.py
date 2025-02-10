@@ -1,5 +1,5 @@
 from django.db import models
-from ..enums.callings import Callings
+from enums.callings import Callings
 import uuid
 
 
@@ -10,7 +10,7 @@ class User(models.Model):
     email = models.EmailField(max_length=255)
     password = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    calling = models.CharField(choices=Callings.choices, default=Callings.MEMBER)
-    memberId = models.BigIntegerField(max_length=255)
+    calling = models.CharField(choices=Callings.choices, default=Callings.MEMBER, max_length=25)
+    memberId = models.BigIntegerField()
     createAt = models.DateTimeField(auto_now_add=True)
     image = models.CharField(max_length=255)

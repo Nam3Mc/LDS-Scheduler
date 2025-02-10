@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import User
-from ..enums.status import Status
-from ..enums.types import Type
+from enums.status import Status
+from enums.types import Type
 import uuid
 
 class Appoiment(models.Model):
@@ -10,6 +10,6 @@ class Appoiment(models.Model):
     startTime = models.TimeField(null=False)
     endTime = models.TimeField(null=False) 
     description = models.TextField()
-    status = models.CharField(choices=Status.choices, default=Status.PENDING)
-    type = models.CharField(choices=Type.choices, default=Type.TEACHING)
+    status = models.CharField(choices=Status.choices, default=Status.PENDING, max_length=20)
+    type = models.CharField(choices=Type.choices, default=Type.TEACHING, max_length=20)
     user = models.ManyToManyField(User)
