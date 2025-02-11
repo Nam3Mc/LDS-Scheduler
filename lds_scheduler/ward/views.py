@@ -1,12 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from .models import Ward
+from rest_framework.views import APIView
+from .services import getWards, getWard, createWard, updateWard, deleteWard
 
-def ward(request):
-    wardsList = list(Ward.objects.all().values())
-    return JsonResponse(wardsList, safe=False)
 
-def add(request):
-    newWard = Ward(address='Atalaya', unitId='123456', )
-    newWard.save()
-    return HttpResponse('Ward added')
+class WardsView(APIView):
+
+    def get(self, request):
+        wards = getWards()
+        return wards
+    def post(self, request):
+        newWard = createWard(request)
+        return newWard

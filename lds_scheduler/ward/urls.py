@@ -1,7 +1,6 @@
 from django.urls import path
-from . import views
+from .views import WardsView
 
 urlpatterns = [
-    path('ward/', views.ward, name='ward' ),
-    path('ward/add/', views.add, name='add')
+    path('ward/', WardsView.as_view()),
 ]
