@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+from friend.models import Friend
 from enums.status import Status
 from enums.types import Type
 import uuid
@@ -13,3 +14,4 @@ class Appointment(models.Model):
     status = models.CharField(choices=Status.choices, default=Status.PENDING, max_length=20)
     type = models.CharField(choices=Type.choices, default=Type.TEACHING, max_length=20)
     user = models.ManyToManyField(User)
+    friend = models.ManyToManyField(Friend, blank=True)
