@@ -7,7 +7,7 @@ we need to install tools in our enviroment
 3) django-admin startproject myProjectName
 cose to create the app
 
-4) source petShop/Scripts/activate
+4) source app/Scripts/activate
 code to activate the enviroment from root folder
 
 5) py manage.py startapp members

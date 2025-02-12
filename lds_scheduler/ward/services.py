@@ -1,6 +1,7 @@
 from .models import Ward
 from rest_framework import status
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404 
 from .serializer import WardSerializer
 
 def getWards():
@@ -8,8 +9,10 @@ def getWards():
     serializer = WardSerializer(wards, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-def getWard(ward_id):
-    pass
+def getWard(request, ward_id):
+    ward = get_object_or_404(Ward, pk=ward_id)
+    serializer = WardSerializer(ward)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 def createWard(request):
     serializer = WardSerializer(data=request.data)
@@ -19,8 +22,19 @@ def createWard(request):
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def updateWard(ward_id, ward):
-    pass
+def updateWard(request, ward_id):
+    ward = get_object_or_404(Ward, pk=ward_id)
+    serializer = WardSerializer(ward, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def deleteWard(ward_id):
-    pass
+def deleteWard(reuqest, ward_id):
+    ward = get_object_or_404(Ward, pk=ward_id)
+    if ward:
+        ward.delete()
+        return Response( {'message': 'Ward deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response( {'message': 'Ward not found'}, status=status.HTTP_404_NOT_FOUND)

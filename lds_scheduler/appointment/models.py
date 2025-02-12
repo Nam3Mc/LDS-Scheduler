@@ -4,7 +4,7 @@ from enums.status import Status
 from enums.types import Type
 import uuid
 
-class Appoiment(models.Model):
+class Appointment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     date = models.DateField()
     startTime = models.TimeField(null=False)
