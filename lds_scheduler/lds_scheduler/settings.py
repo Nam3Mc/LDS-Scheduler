@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'ward',
     'invitation',
     'friend',
-    'appointment'
+    'appointment',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -135,12 +136,15 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REST_FRAMEWORK = {
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.SessionAuthentication',  # Para login con cookies (Django)
-        # 'rest_framework.authentication.TokenAuthentication',  # Para autenticación con tokens
-    # ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.permissions.IsAuthenticated',  # Por defecto, todas las rutas requieren login
-    # )
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',  # Para login con cookies (Django)
+        'rest_framework.authentication.TokenAuthentication',  # Para autenticación con tokens
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',  # Por defecto, todas las rutas requieren login
+    )
+}
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

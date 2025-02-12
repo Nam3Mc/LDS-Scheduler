@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.decorators import authentication_classes, permission_classes
 from .services import getUsers, getUser, createUser, updateUser, deleteUser
+from django.contrib.auth.decorators import login_required
 
 class Users(APIView):
     
@@ -14,14 +15,17 @@ class Users(APIView):
 
 class User(APIView):
      
+        @login_required
         def get(self, request, ward_id):
             user = getUser(request, ward_id)
             return user
         
+        @login_required
         def put(self, request, ward_id):
             updatedUser = updateUser(request, ward_id)
             return updatedUser
         
+        @login_required
         def delete(self, request, ward_id):
             deletedUser = deleteUser(request, ward_id)
             return deletedUser
