@@ -15,6 +15,12 @@ def getWard(request, ward_id):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 def createWard(request):
+    ward_unit = request.data.get('unitId')
+    ward = Ward.objects.filter(unitId=ward_unit)
+
+    if ward:
+        return Response({'Error', 'This ward is already added'}, status=status.HTTP_409_CONFLICT)
+
     serializer = WardSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

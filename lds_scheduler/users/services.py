@@ -15,6 +15,12 @@ def getUser(request, user_id):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 def createUser(request):
+    user_number_id = request.data.get('memberId')
+    user = User.objects.filter(memberId='user_number_id')
+
+    if user:
+        return Response({'Error', 'This user already exist'})
+    
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
