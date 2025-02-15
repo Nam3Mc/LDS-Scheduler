@@ -141,9 +141,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',  # Para login con cookies (Django)
         'rest_framework.authentication.TokenAuthentication',  # Para autenticación con tokens
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',  # Por defecto, todas las rutas requieren login
-    )
+    # 'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.IsAuthenticated',  # Por defecto, todas las rutas requieren login
+    # )
 }
 
 LOGIN_REDIRECT_URL = '/'
