@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -86,11 +86,11 @@ WSGI_APPLICATION = 'lds_scheduler.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lds_scheduler',
-        'USER': 'root',
-        'PASSWORD': '2Years*end2022',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': config('NAME_DB'),
+        'USER': config('USER_BD'),
+        'PASSWORD': config('PASSWORD_DB'),
+        'HOST': config('HOST'),
+        'PORT': config('PORT'),
     }
 }
 
