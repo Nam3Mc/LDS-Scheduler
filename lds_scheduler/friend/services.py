@@ -7,12 +7,12 @@ from django.shortcuts import get_object_or_404
 def getFriends():
     friends = Friend.objects.all()
     serializer = FriendSerializer(friends, many=True)
-    return serializer.data  # Devuelve solo los datos, no un Response
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 def getFriend(friend_id):
     friend = get_object_or_404(Friend, pk=friend_id)
     serializer = FriendSerializer(friend)
-    return serializer.data  # Devuelve solo los datos
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 def createFriend(request):
     serializer = FriendSerializer(data=request.data)
@@ -21,9 +21,9 @@ def createFriend(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-def updateFriend(request, friend_id):
+def updateFriend(friend_id, request):
     friend = get_object_or_404(Friend, pk=friend_id)
-    serializer = FriendSerializer(friend, data=request.data)
+    serializer = FriendSerializer(friend, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -5,23 +5,18 @@ from .services import getFriends, getFriend, createFriend, updateFriend, deleteF
 class FriendsView(APIView):
    
     def get(self, request):
-        friends = getFriends()
-        return Response(friends)
+        return getFriends()
 
     def post(self, request):
-        newFriend = createFriend(request)
-        return Response(newFriend)
+        return createFriend(request)  
 
 class FriendView(APIView):
     
     def get(self, request, friend_id):
-        friend = getFriend(request, friend_id)
-        return Response(friend)
-    
+        return getFriend(friend_id) 
+
     def put(self, request, friend_id):
-        updatedFriend = updateFriend(request, friend_id)
-        return Response(updatedFriend)
+        return updateFriend(friend_id, request)
     
     def delete(self, request, friend_id):
-        deletedFriend = deleteFriend(request, friend_id)
-        return Response(deletedFriend)
+        return deleteFriend(friend_id) 

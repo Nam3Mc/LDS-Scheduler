@@ -9,7 +9,7 @@ def getUsers():
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-def getUser(request, user_id):
+def getUser(user_id):
     user = get_object_or_404(User, pk=user_id)
     serializer = UserSerializer(user)
     return Response(serializer.data, status=status.HTTP_200_OK)

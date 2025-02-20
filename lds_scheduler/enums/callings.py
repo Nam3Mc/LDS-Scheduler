@@ -10,3 +10,6 @@ class Callings(models.TextChoices):
     JWCOUNSELOR = 'JWCounselor', 'JWC'
     RSPRESIDENT = 'RSPresident', 'RSP'
     RSCOUNSELOR = 'RSCounselor', 'RSC'
+    SPRESINDENT = 'SPresident', 'SP'
+    SCONSUELOR = 'SCounselor', 'SC'
+    HPRIESTHOOD = 'HPriesthood', 'HP'

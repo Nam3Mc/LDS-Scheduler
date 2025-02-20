@@ -15,17 +15,17 @@ class Users(APIView):
 
 class User(APIView):
      
-        @login_required
-        def get(self, request, ward_id):
-            user = getUser(request, ward_id)
+        # @login_required
+        def get(self, request, user_id):
+            user = getUser( user_id)
             return user
         
-        @login_required
-        def put(self, request, ward_id):
-            updatedUser = updateUser(request, ward_id)
+        # @login_required
+        def put(self, request, user_id):
+            updatedUser = updateUser(request, user_id)
             return updatedUser
         
-        @login_required
-        def delete(self, request, ward_id):
-            deletedUser = deleteUser(request, ward_id)
+        # @login_required
+        def delete(self, request, user_id):
+            deletedUser = deleteUser(request, user_id)
             return deletedUser
