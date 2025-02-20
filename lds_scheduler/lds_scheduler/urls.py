@@ -19,11 +19,11 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', include('ward.urls') ),
-    path('', include('users.urls') ),
-    path('', include('invitation.urls') ),
-    path('', include('friend.urls') ),
-    path('', include('appointment.urls') ),
+    path('ward/', include('ward.urls') ),
+    path('user/', include('users.urls') ),
+    path('invitation/', include('invitation.urls') ),
+    path('friend/', include('friend.urls') ),
+    path('appointment/', include('appointment.urls') ),
     path('', include('authentication.urls') ),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),

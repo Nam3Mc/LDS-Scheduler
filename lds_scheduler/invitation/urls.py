@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import Invitations, Invitation
+from .views import InvitationsView, InvitationView
 
 urlpatterns = [
-    path('invitations/', Invitations.as_view(), name='invitation' ),
-    path('invitation/<uuid:invitation_id>/', Invitation.as_view(), name='invitation' )
+    path('', InvitationsView.as_view(), name='invitations' ),
+    path('<uuid:invitation_id>/', InvitationView.as_view(), name='invitation' )
 ]

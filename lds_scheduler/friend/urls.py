@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import Friend, Friends
+from django.http import HttpResponse
+from .views import FriendsView, FriendView
 
 urlpatterns = [
-    path('friends/', Friends.as_view(), name='friends' ),
-    path('friend/<uuid:friend_id>/', Friend.as_view(), name='friend' )
+    path('', FriendsView.as_view(), name='friends'),
+    path('<friend_id>/', FriendView.as_view())
 ]

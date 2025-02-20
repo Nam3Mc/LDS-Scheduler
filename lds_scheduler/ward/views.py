@@ -8,6 +8,7 @@ class WardsView(APIView):
 
     def get(self, request):
         wards = getWards()
+        print(wards)
         return wards
 
     @login_required

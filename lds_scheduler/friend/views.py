@@ -1,18 +1,18 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 from .services import getFriends, getFriend, createFriend, updateFriend, deleteFriend
 
-class Friends(APIView):
+class FriendsView(APIView):
+   
     def get(self, request):
         friends = getFriends()
         return Response(friends)
 
     def post(self, request):
         newFriend = createFriend(request)
-        return Response(newFriend, status=status.HTTP_201_CREATED)
+        return Response(newFriend)
 
-class Friend(APIView):
+class FriendView(APIView):
     
     def get(self, request, friend_id):
         friend = getFriend(request, friend_id)

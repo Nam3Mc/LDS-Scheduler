@@ -3,19 +3,19 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from .services import getInvitations, getInvitation, createInvitation, updateInvitation, deleteInvitation
 from django.contrib.auth.decorators import login_required
 
-class Invitations(APIView):
+class InvitationsView(APIView):
     
-    @login_required
+    # @login_required
     def get(self, request):
         invitations = getInvitations()
         return invitations
     
-    @login_required
+    # @login_required
     def post(self, request):
         newInvitation = createInvitation(request)
         return newInvitation
     
-class Invitation(APIView):
+class InvitationView(APIView):
      
     @login_required
     def get(self, request, invitation_id):
