@@ -1,31 +1,37 @@
 from rest_framework.views import APIView
-from rest_framework.decorators import authentication_classes, permission_classes
-from .services import getUsers, getUser, createUser, updateUser, deleteUser
-from django.contrib.auth.decorators import login_required
+from rest_framework.response import Response
+from rest_framework import status
+from .services import getUsers, getUser, singUp, updateUser, deleteUser, sing_In
 
 class Users(APIView):
-    
-        def get(self, request):
-            users = getUsers()
-            return users
-    
-        def post(self, request):
-            newUser = createUser(request)
-            return newUser
+
+    def get(self, request):
+        users = getUsers()  
+        return Response(users, status=status.HTTP_200_OK)
 
 class User(APIView):
-     
-        # @login_required
-        def get(self, request, user_id):
-            user = getUser( user_id)
-            return user
-        
-        # @login_required
-        def put(self, request, user_id):
-            updatedUser = updateUser(request, user_id)
-            return updatedUser
-        
-        # @login_required
-        def delete(self, request, user_id):
-            deletedUser = deleteUser(request, user_id)
-            return deletedUser
+    # permission_classes = [IsAuthenticated]  
+
+    def get(self, request, user_id):
+        user = getUser(user_id)
+        return Response(user, status=status.HTTP_200_OK)
+
+    def put(self, request, user_id):
+        updated_user = updateUser(request, user_id)
+        return Response(updated_user, status=status.HTTP_200_OK)
+
+    def delete(self, request, user_id):
+        deleteUser(request, user_id)
+        return Response({'message': 'User deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+    
+class SingIn(APIView):
+
+    def post(self, request):
+        user, status_code = sing_In(request)
+        return Response(user, status=status_code)
+
+class SingUp(APIView):
+       
+    def post(self, request):
+        user = singUp(request)
+        return Response(user, tatus=status.HTTP_201_CREATED)

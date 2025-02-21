@@ -12,7 +12,7 @@ class WardsView(APIView):
         wards = getWards()
         return wards
 
-    @login_required
+    # @login_required
     def post(self, request):
         newWard = createWard(request)
         return newWard

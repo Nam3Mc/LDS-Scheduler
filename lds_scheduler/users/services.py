@@ -1,50 +1,66 @@
 from .models import User
-from rest_framework import status
-from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .serializer import UserSerializer
-from django.contrib.auth.models import User
+from .serializer import UserSerializer, LoginSerializer
 from django.contrib.auth.hashers import make_password
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.response import Response
+from django.contrib.auth.hashers import check_password
 
 def getUsers():
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    return serializer.data
 
 def getUser(user_id):
     user = get_object_or_404(User, pk=user_id)
     serializer = UserSerializer(user)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    return serializer.data
 
-def createUser(request):
+def singUp(request):
     user_number_id = request.data.get('memberId')
-    user = User.objects.filter(memberId='user_number_id')
 
-    if user:
-        return Response({'Error', 'This user already exist'})
-    
+    if User.objects.filter(memberId=user_number_id).exists():
+        return {'error': 'This user already exists'}, 400  # Se devuelve un diccionario y código de error
+
     request.data['password'] = make_password(request.data.get('password'))
-
     serializer = UserSerializer(data=request.data)
+
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+        return serializer.data, 201
+    return serializer.errors, 400
+
 def updateUser(request, user_id):
     user = get_object_or_404(User, pk=user_id)
-    serializer = UserSerializer(user, data=request.data)
+    serializer = UserSerializer(user, data=request.data, partial=True)
+
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-def deleteUser(request, user_id):
+        return serializer.data, 200
+    return serializer.errors, 400
+
+def deleteUser(user_id):
     user = get_object_or_404(User, pk=user_id)
-    if user:
-        user.delete()
-        return Response( {'message': 'User deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
-    else:
-        return Response( {'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+    user.delete()
+    return {'message': 'User deleted successfully'}, 204
+
+def sing_In(request):
+    serializer = LoginSerializer(data=request.data)
+
+    if serializer.is_valid():
+        email = serializer.validated_data['email']
+        password = serializer.validated_data['password']
+
+        try:
+            user = User.objects.get(email=email)
+            userData = get_object_or_404(User, pk=email)
+
+            if check_password(password, user.password):
+                refresh = RefreshToken.for_user(user)
+                return {"refresh": str(refresh), "access": str(refresh.access_token), 'user': User(userData)}, 200
+            else:
+                return {"error": "Invalid Credentials"}, 401
+        except User.DoesNotExist:
+            return {"error": "Invalid Credentials"}, 401
+
+    return serializer.errors, 400
