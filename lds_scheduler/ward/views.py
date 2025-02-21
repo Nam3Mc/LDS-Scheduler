@@ -2,13 +2,14 @@ from rest_framework.views import APIView
 from rest_framework.decorators import authentication_classes, permission_classes
 from django.contrib.auth.decorators import login_required
 from .services import getWards, getWard, createWard, updateWard, deleteWard
+from django.http import JsonResponse
+
 
 
 class WardsView(APIView):
 
     def get(self, request):
         wards = getWards()
-        print(wards)
         return wards
 
     @login_required
@@ -22,16 +23,16 @@ class WardById(APIView):
         ward = getWard(request, ward_id)
         return ward
     
-    @authentication_classes([])
-    @permission_classes([])
-    @login_required
+    # @authentication_classes([])
+    # @permission_classes([])
+    # @login_required
     def put(self, request, ward_id):
         updatedWard = updateWard(request, ward_id)
         return updatedWard
     
     # @authentication_classes([])
     # @permission_classes([])
-    @login_required
+    # @login_required
     def delete(self, request, ward_id):
         deletedWard = deleteWard(request, ward_id)
         return deletedWard
