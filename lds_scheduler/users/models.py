@@ -2,7 +2,7 @@ from django.db import models
 from enums.callings import Callings
 from ward.models import Ward
 import uuid
-
+from django.contrib.auth.hashers import make_password, check_password
 
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False )
@@ -16,3 +16,11 @@ class User(models.Model):
     createAt = models.DateTimeField(auto_now_add=True)
     image = models.CharField(max_length=255, default='https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg', blank=True)
     ward = models.ForeignKey(Ward, on_delete=models.CASCADE, null=True)
+
+    def save (self,*args, **kwargs):
+        if not self.password.startswith('pbkff2_sha256$'):
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)

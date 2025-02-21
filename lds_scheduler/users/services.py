@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .serializer import UserSerializer
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 def getUsers():
     users = User.objects.all()
@@ -21,6 +23,8 @@ def createUser(request):
     if user:
         return Response({'Error', 'This user already exist'})
     
+    request.data['password'] = make_password(request.data.get('password'))
+
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
