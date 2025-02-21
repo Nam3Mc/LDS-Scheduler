@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .services import getUsers, getUser, singUp, updateUser, deleteUser, sing_In
+from .services import getUsers, getUser, sign_up, updateUser, deleteUser, sign_in
 
 class Users(APIView):
 
@@ -24,14 +24,12 @@ class User(APIView):
         deleteUser(request, user_id)
         return Response({'message': 'User deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
     
-class SingIn(APIView):
+class SignIn(APIView):
 
     def post(self, request):
-        user, status_code = sing_In(request)
-        return Response(user, status=status_code)
+        return sign_in(request)  # Ya devuelve una Response
 
-class SingUp(APIView):
+class SignUp(APIView):
        
     def post(self, request):
-        user = singUp(request)
-        return Response(user, tatus=status.HTTP_201_CREATED)
+        return sign_up(request)  # Ya devuelve una Response
